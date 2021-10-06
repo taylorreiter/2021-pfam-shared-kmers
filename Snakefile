@@ -28,7 +28,7 @@ rule decompress_pfam_A:
     '''
 
 checkpoint split_pfam_fasta_by_identifier:
-    input: "outputs/pfam/Pfam-A.fasta"
+    input: "inputs/Pfam-A.fasta"
     output: directory("outputs/pfam_fastas")
     resources: mem_mb = 4000
     threads: 1
