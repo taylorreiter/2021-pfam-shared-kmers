@@ -1,0 +1,7 @@
+name: pfam
+channels:
+   - conda-forge
+   - bioconda
+   - defaults
+dependencies:
+   - snakemake-minimal=6.6.1
