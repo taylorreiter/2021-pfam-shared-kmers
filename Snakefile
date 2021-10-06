@@ -3,7 +3,7 @@ def checkpoint_output_split_pfam_fasta_by_identifier(wildcards):
     # checkpoint_output encodes the output dir from the checkpoint rule.
     checkpoint_output = checkpoints.split_pfam_fasta_by_identifier.get(**wildcards).output[0]    
     file_names = expand("outputs/pfam_sigs/{pfam}_k10_scaled1.sig",
-                        pfam = glob_wildcards(os.path.join(checkpoint_output, "{pfam}")).pfam)
+                        pfam = glob_wildcards(os.path.join(checkpoint_output, "{pfam}.fa")).pfam)
     return file_names
 
 rule all:

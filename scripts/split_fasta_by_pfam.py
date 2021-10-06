@@ -29,7 +29,7 @@ with open(log, "w") as out_log:
         if not pfam_name:
             pfam_name = this_pfam
         if this_pfam != pfam_name:
-            pfam_filename = pfam_name.rsplit(";", 1)[0]
+            pfam_filename = pfam_name.split(";")[0]
             outfile = os.path.join(output_dirname, f"{pfam_filename}.fa")
             filenum+=1
             with open(outfile, "w") as out:
