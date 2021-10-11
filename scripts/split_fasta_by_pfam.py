@@ -40,5 +40,14 @@ with open(log, "w") as out_log:
         # add record to pfam_records
         pfam_records+=[record]
 
+    # catch last pfam
+    pfam_filename = pfam_name.split(";")[0]
+    outfile = os.path.join(output_dirname, f"{pfam_filename}.fa")
+    filenum+=1
+    with open(outfile, "w") as out:
+        for record in pfam_records:
+            out.write(f">{record.name}\n{record.sequence}\n")
+
+
     out_log.write(f"{str(n)} contigs written to {str(filenum)} individual pfam fasta files\n")
 
