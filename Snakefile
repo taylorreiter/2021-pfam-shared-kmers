@@ -39,7 +39,7 @@ rule sourmash_sketch:
     input: "outputs/pfam_fastas/{pfam}.fa"
     output: "outputs/pfam_sigs/{pfam}_k10_scaled1.sig"
     conda: "envs/sourmash.yml"
-    resources: mem_mb = 1000
+    resources: mem_mb=lambda wildcards, attempt: attempt * 3000 
     threads: 1
     shell:'''
     sourmash sketch protein -p k=10,scaled=1 -o {output} --name {wildcards.pfam} {input}
@@ -51,8 +51,8 @@ rule sourmash_compare:
         csv = "outputs/pfam_compare/pfam_compare.csv",
         comp = "outputs/pfam_compare/pfam_compare.comp"
     conda: "envs/sourmash.yml"
-    resources:  mem_mb = 32000
-    threads: 8
+    resources:  mem_mb=lambda wildcards, attempt: attempt * 200000
+    threads: 1
     shell:'''
-    sourmash compare {input} -p 8 -o {output.comp} --csv {output.csv}
+    sourmash compare {input} -o {output.comp} --csv {output.csv}
     '''
