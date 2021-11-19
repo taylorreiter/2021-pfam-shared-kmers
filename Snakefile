@@ -9,7 +9,7 @@ def checkpoint_output_split_pfam_fasta_by_identifier(wildcards):
 rule all:
     input:
         #"outputs/pfam_compare/pfam_compare.csv",
-        expand("outputs/pfam_index/all_pfams_k10_scaled{scaled}.sbt.zip", scaled=[1,10,100]),
+        expand("outputs/pfam_index/pfam_clans_k10_scaled{scaled}.sbt.zip", scaled=[1,10,100]),
 
 rule download_pfam_A:
     output: "inputs/Pfam-A.fasta.gz"
@@ -48,7 +48,7 @@ rule sourmash_sketch:
 
 rule write_sketchlist:
     input: ancient(checkpoint_output_split_pfam_fasta_by_identifier)
-    output: "outputs/all_pfams_k10_scaled1.siglist.txt"
+    output: "outputs/pfam_clans_k10_scaled1.siglist.txt"
     resources: mem_mb=lambda wildcards, attempt: attempt * 3000 
     threads: 1
     run:
@@ -61,9 +61,9 @@ rule write_sketchlist:
                     print(f"Missing sketchfile! This should not happen {sketch_path}\n")
 
 rule zip_sketches:
-    input: "outputs/all_pfams_k10_scaled1.siglist.txt"
-    output: "outputs/pfam_index/all_pfams_k10_scaled1.zip"
-    log: "outputs/logs/sourmash/zip_sketches/all_pfams_k10_scaled1.zip.log"
+    input: "outputs/pfam_clans_k10_scaled1.siglist.txt"
+    output: "outputs/pfam_index/pfam_clans_k10_scaled1.zip"
+    log: "outputs/logs/sourmash/zip_sketches/pfam_clans_k10_scaled1.zip.log"
     conda: "envs/sourmash.yml"
     resources: mem_mb=lambda wildcards, attempt: attempt * 5000 
     threads: 1
@@ -73,9 +73,9 @@ rule zip_sketches:
         '''
 
 rule sbt_index:
-    input: "outputs/pfam_index/all_pfams_k10_scaled1.zip"
-    output: "outputs/pfam_index/all_pfams_k10_scaled{scaled}.sbt.zip"
-    log: "outputs/logs/sourmash/sbt-index/all_pfams_k10_scaled{scaled}.sbt.log"
+    input: "outputs/pfam_index/pfam_clans_k10_scaled1.zip"
+    output: "outputs/pfam_index/pfam_clans_k10_scaled{scaled}.sbt.zip"
+    log: "outputs/logs/sourmash/sbt-index/pfam_clans_k10_scaled{scaled}.sbt.log"
     conda: "envs/sourmash.yml"
     resources: mem_mb=lambda wildcards, attempt: attempt * 50000 
     threads: 1
