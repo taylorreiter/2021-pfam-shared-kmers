@@ -1,6 +1,7 @@
 minscaled=1
 scaled= [1,10,100]
-alphabet_info = {'protein': [7,10], 'dayhoff': ['16']}
+#alphabet_info = {'protein': [7,10], 'dayhoff': ['16']}
+alphabet_info = {'protein': [7], 'dayhoff': ['16']}
 
 p_str = []
 alpha_ksizes=[]
@@ -65,7 +66,7 @@ rule sourmash_sketch:
     resources: mem_mb=lambda wildcards, attempt: attempt * 3000 
     threads: 1
     shell:'''
-    sourmash sketch protein -p {params.param_string} -o {output} --name {wildcards.pfam} {input}
+    sourmash sketch protein {params.param_string} -o {output} --name {wildcards.pfam} {input}
     '''
 
 rule write_sketchlist:
